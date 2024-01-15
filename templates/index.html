@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fabric.js Canvas</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
+</head>
+<body>
+    <canvas id="canvas" width="800" height="600"></canvas>
+    <button onclick="download()">Download</button>
+
+    <script>
+        var canvas = new fabric.Canvas('canvas');
+        var imageUrl = "{{ image_url }}";
+        var textValue = "{{ text }}";
+        var rectColor = "{{ rect_color }}";
+
+        fabric.Image.fromURL(imageUrl, function(oImg) {
+            canvas.add(oImg);
+        });
+
+        var rect = new fabric.Rect({
+            left: 100,
+            top: 100,
+            fill: rectColor,
+            width: 200,
+            height: 200
+        });
+        canvas.add(rect);
+
+        var text = new fabric.Text(textValue, {
+            left: 150,
+            top: 150,
+            fontSize: 20
+        });
+        canvas.add(text);
+
+        function download() {
+            var link = document.createElement('a');
+            link.download = 'canvas.png';
+            link.href = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
+            link.click();
+        }
+    </script>
+</body>
+</html>
