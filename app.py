@@ -7,7 +7,7 @@ def index():
     # Sample data to pass to the template
     image_url = request.args.get('image_url', '')
     text = request.args.get('text', '')
-    rect_color = request.args.get('rect_color', '#FFFFFF')  # Red color
+    rect_color = request.args.get('rect_color', '#000000')  # Red color
     text_bottom = request.args.get('text', '')
     text_color= request.args.get('rect_color', '#FFFFFF')
 
