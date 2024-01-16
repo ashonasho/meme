@@ -12,55 +12,41 @@
     <script>
         var canvas = new fabric.Canvas('canvas');
         var imageUrl = "{{ image_url }}";
-        var textValue = "{{ text }}";
+        var textTopValue = "{{ text_top }}";
+        var textBottomValue = "{{ text_bottom }}";
         var textColor = "{{ text_color }}";
-        var eyeImageUrl = "{{ eye_image_url }}";
         var rectColor = "{{ rect_color }}"; // Color for the text background box
 
         fabric.Image.fromURL(imageUrl, function(oImg) {
             canvas.add(oImg);
-            addTextBox();
-            if (eyeImageUrl) {
-                addEyeEffect();
-            }
+            addTextWithBackground(textTopValue, 20); // Top position
+            addTextWithBackground(textBottomValue, canvas.height - 60); // Bottom position
         });
 
-        function addTextBox() {
-            var rect = new fabric.Rect({
-                left: 100,
-                top: 100,
-                fill: rectColor,
-                width: 200,
-                height: 50, // Adjust as needed
-                rx: 10, // Rounded corners
-                ry: 10
-            });
-
+        function addTextWithBackground(textValue, topPosition) {
             var text = new fabric.Text(textValue, {
                 fontSize: 20,
                 fill: textColor,
-                originX: 'center',
-                originY: 'center'
+                originX: 'left',
+                originY: 'top'
+            });
+
+            var rect = new fabric.Rect({
+                left: 10,
+                top: topPosition,
+                fill: rectColor,
+                width: canvas.width - 20, // Full width of canvas
+                height: 40,
+                originX: 'left',
+                originY: 'top'
             });
 
             var group = new fabric.Group([rect, text], {
-                left: 150,
-                top: 150
+                left: 10,
+                top: topPosition
             });
 
             canvas.add(group);
-        }
-
-        function addEyeEffect() {
-            fabric.Image.fromURL(eyeImageUrl, function(oImg) {
-                oImg.set({
-                    left: 200,
-                    top: 200,
-                    scaleX: 0.5,
-                    scaleY: 0.5
-                });
-                canvas.add(oImg);
-            });
         }
 
         function download() {
