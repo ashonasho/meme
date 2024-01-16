@@ -36,17 +36,22 @@
         canvas.add(text);
 
         document.getElementById('download-btn').addEventListener('click', function() {
-            download();
-        });
-        document.getElementById('download-btn').addEventListener('click', function() {
-            var link = document.createElement('a');
-            link.download = 'canvas.png';
-            link.href = canvas.toDataURL('image/png');
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            downloadCanvas();
         });
 
+        function downloadCanvas() {
+            var link = document.createElement('a');
+            link.download = 'canvas.png';
+            // Convert canvas to data URL
+            var dataURL = canvas.toDataURL('image/png');
+            // Set the link's href to the data URL
+            link.href = dataURL;
+            // Append the link to the document and trigger the click
+            document.body.appendChild(link);
+            link.click();
+            // Remove the link after download
+            document.body.removeChild(link);
+        }
     </script>
 </body>
 </html>
