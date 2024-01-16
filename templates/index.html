@@ -15,12 +15,17 @@
         var textTopValue = "{{ text_top }}";
         var textBottomValue = "{{ text_bottom }}";
         var textColor = "{{ text_color }}";
-        var rectColor = "{{ rect_color }}"; // Color for the text background box
+        var rectColor = "black"; // Fixed black color for the text background box
 
         fabric.Image.fromURL(imageUrl, function(oImg) {
+            // Scale image to fit canvas if needed
+            var scale = Math.min(canvas.width / oImg.width, canvas.height / oImg.height);
+            oImg.scale(scale).set({ left: 0, top: 0 });
             canvas.add(oImg);
-            addTextWithBackground(textTopValue, 20); // Top position
-            addTextWithBackground(textBottomValue, canvas.height - 60); // Bottom position
+
+            // Adjust topPosition based on the image size
+            addTextWithBackground(textTopValue, oImg.top + 20); // Top position
+            addTextWithBackground(textBottomValue, oImg.top + oImg.getScaledHeight() - 60); // Bottom position
         });
 
         function addTextWithBackground(textValue, topPosition) {
