@@ -13,27 +13,55 @@
         var canvas = new fabric.Canvas('canvas');
         var imageUrl = "{{ image_url }}";
         var textValue = "{{ text }}";
-        var rectColor = "{{ rect_color }}";
+        var textColor = "{{ text_color }}";
+        var eyeImageUrl = "{{ eye_image_url }}";
+        var rectColor = "{{ rect_color }}"; // Color for the text background box
 
         fabric.Image.fromURL(imageUrl, function(oImg) {
             canvas.add(oImg);
+            addTextBox();
+            if (eyeImageUrl) {
+                addEyeEffect();
+            }
         });
 
-        var rect = new fabric.Rect({
-            left: 100,
-            top: 100,
-            fill: rectColor,
-            width: 200,
-            height: 200
-        });
-        canvas.add(rect);
+        function addTextBox() {
+            var rect = new fabric.Rect({
+                left: 100,
+                top: 100,
+                fill: rectColor,
+                width: 200,
+                height: 50, // Adjust as needed
+                rx: 10, // Rounded corners
+                ry: 10
+            });
 
-        var text = new fabric.Text(textValue, {
-            left: 150,
-            top: 150,
-            fontSize: 20
-        });
-        canvas.add(text);
+            var text = new fabric.Text(textValue, {
+                fontSize: 20,
+                fill: textColor,
+                originX: 'center',
+                originY: 'center'
+            });
+
+            var group = new fabric.Group([rect, text], {
+                left: 150,
+                top: 150
+            });
+
+            canvas.add(group);
+        }
+
+        function addEyeEffect() {
+            fabric.Image.fromURL(eyeImageUrl, function(oImg) {
+                oImg.set({
+                    left: 200,
+                    top: 200,
+                    scaleX: 0.5,
+                    scaleY: 0.5
+                });
+                canvas.add(oImg);
+            });
+        }
 
         function download() {
             var link = document.createElement('a');
