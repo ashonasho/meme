@@ -13,83 +13,28 @@
         var canvas = new fabric.Canvas('canvas');
         var imageUrl = "{{ image_url }}";
         var textValue = "{{ text }}";
-        var textBottomValue = "{{ text_bottom }}";
         var rectColor = "{{ rect_color }}";
-        var textColor = "{{ text_color }}";
-        var maxWidth = 750; // maximum width of the text box
+
+        fabric.Image.fromURL(imageUrl, function(oImg) {
+            canvas.add(oImg);
+        });
+
+        var rect = new fabric.Rect({
+            left: 100,
+            top: 100,
+            fill: rectColor,
+            width: 200,
+            height: 200
+        });
+        canvas.add(rect);
 
         var text = new fabric.Text(textValue, {
-            left: 25, // Adjusted for padding
-            fontSize: 20,
-            fill: textColor,
-            width: maxWidth, // Set maximum width for text
-            textAlign: 'center' // Center align text
+            left: 150,
+            top: 150,
+            fontSize: 20
         });
-
-        var textBottom = new fabric.Text(textBottomValue, {
-            left: 25, // Adjusted for padding
-            fontSize: 20,
-            fill: textColor,
-            width: maxWidth, // Set maximum width for text
-            textAlign: 'center' // Center align text
-        });
-    
-        // Add text temporarily to measure its size
         canvas.add(text);
-        canvas.add(textBottom);
-        canvas.renderAll();
-    
-        // Calculate necessary rectangle heights
-        var topRectHeight = text.height + 35; // Add some padding
-        var bottomRectHeight = textBottom.height + 35; // Add some padding
-    
-        var topRect = new fabric.Rect({
-            left: 0,
-            top: 0,
-            fill: rectColor,
-            width: 800,
-            height: topRectHeight
-        });
-    
-        var bottomRect = new fabric.Rect({
-            left: 0,
-            top: 0, // Will be updated after the image is loaded
-            fill: rectColor,
-            width: 800,
-            height: bottomRectHeight
-        });
-    
-        fabric.Image.fromURL(imageUrl, function(oImg) {
-            var totalHeight = topRectHeight + oImg.height + bottomRectHeight;
-            canvas.setHeight(totalHeight);
-    
-            oImg.set({
-                left: 0,
-                top: topRectHeight
-            });
-    
-            bottomRect.set({
-                top: topRectHeight + oImg.height
-            });
-    
-            text.set({
-                top: (topRectHeight - text.height) / 2
-            });
-    
-            textBottom.set({
-                top: topRectHeight + oImg.height + (bottomRectHeight - textBottom.height) / 2
-            });
-    
-            // Clear the canvas and add all elements in proper order
-            canvas.clear();
-            canvas.add(topRect);
-            canvas.add(text);
-            canvas.add(oImg);
-            canvas.add(bottomRect);
-            canvas.add(textBottom);
-    
-            canvas.renderAll();
-        });
+
         function download() {
             var link = document.createElement('a');
             link.download = 'canvas.png';
@@ -97,24 +42,5 @@
             link.click();
         }
     </script>
-    
-    
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
