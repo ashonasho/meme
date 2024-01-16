@@ -91,13 +91,11 @@
             canvas.renderAll();
         });
         function download() {
-        var link = document.createElement('a');
-        link.download = 'canvas_image.png'; // Name of the downloaded file
-        link.href = canvas.toDataURL('image/png'); // Get the canvas data as a PNG image
-        document.body.appendChild(link); // Append the link to the body
-        link.click(); // Simulate a click on the link to trigger the download
-        document.body.removeChild(link); // Remove the link after triggering the download
-    }
+            var link = document.createElement('a');
+            link.download = 'canvas.png';
+            link.href = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
+            link.click();
+        }
     </script>
     
     
