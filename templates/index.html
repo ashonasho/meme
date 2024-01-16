@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +8,7 @@
 </head>
 <body>
     <canvas id="canvas" width="800" height="600"></canvas>
-    <button id="download-btn">Download</button>
+    <button onclick="download()">Download</button>
 
     <script>
         var canvas = new fabric.Canvas('canvas');
@@ -35,24 +36,11 @@
         });
         canvas.add(text);
 
-        document.getElementById('download-btn').addEventListener('click', function() {
-            downloadCanvas();
-        });
-
-        document.getElementById('download-btn').addEventListener('click', function() {
-            downloadCanvas();
-        });
-
-        function downloadCanvas() {
-            // Ensure the canvas is rendered before converting to data URL
-            canvas.renderAll();
-
+        function download() {
             var link = document.createElement('a');
             link.download = 'canvas.png';
-            link.href = canvas.toDataURL('image/png');
-            document.body.appendChild(link); // Append link to the body
-            link.click(); // Simulate click on the link
-            document.body.removeChild(link); // Remove link from the body
+            link.href = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
+            link.click();
         }
     </script>
 </body>
