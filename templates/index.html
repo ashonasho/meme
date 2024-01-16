@@ -37,11 +37,19 @@
         canvas.add(text);
 
         function download() {
-            var link = document.createElement('a');
-            link.download = 'canvas.png';
-            link.href = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
-            link.click();
+            var canvasEl = canvas.getElement(); // Get the HTML canvas element from Fabric.js canvas
+            canvasEl.toBlob(function(blob) {
+                var url = URL.createObjectURL(blob);
+                var link = document.createElement('a');
+                link.download = 'canvas_image.png';
+                link.href = url;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url); // Clean up the URL object
+            }, 'image/png');
         }
+
     </script>
 </body>
 </html>
