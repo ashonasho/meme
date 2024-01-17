@@ -14,6 +14,7 @@
         var imageUrl = "{{ image_url }}";
         var textValue = "{{ text }}";
         var rectColor = "{{ rect_color }}";
+        var rectHeight = 200; // Height of the rectangles
 
         fabric.Image.fromURL(imageUrl, function(oImg) {
             // Resize image to fit the canvas
@@ -21,15 +22,25 @@
             oImg.scaleToHeight(canvas.height);
             canvas.add(oImg);
 
-            // Add a rectangle to cover the full width of the canvas
-            var rect = new fabric.Rect({
+            // Add a top rectangle
+            var topRect = new fabric.Rect({
                 left: 0,
                 top: 0,
                 fill: rectColor,
                 width: canvas.width,
-                height: 200  // Set the height as per your requirement
+                height: rectHeight
             });
-            canvas.add(rect);
+            canvas.add(topRect);
+
+            // Add a bottom rectangle
+            var bottomRect = new fabric.Rect({
+                left: 0,
+                top: canvas.height - rectHeight,
+                fill: rectColor,
+                width: canvas.width,
+                height: rectHeight
+            });
+            canvas.add(bottomRect);
 
             // Add text
             var text = new fabric.Text(textValue, {
