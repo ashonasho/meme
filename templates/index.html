@@ -14,7 +14,7 @@
         var imageUrl = "{{ image_url }}";
         var textValue = "{{ text }}";
         var rectColor = "{{ rect_color }}";
-        var rectHeight = 200; // Height of the rectangles
+        var rectHeight = 50; // Height of the rectangles
 
         fabric.Image.fromURL(imageUrl, function(oImg) {
             // Resize image to fit the canvas
@@ -44,8 +44,8 @@
 
             // Add text
             var text = new fabric.Text(textValue, {
-                left: 150,  // Adjust the position as needed
-                top: 150,  // Adjust the position as needed
+                left: 150, // Adjust the position as needed
+                top: (canvas.height / 2) - (rectHeight / 2), // Center the text vertically
                 fontSize: 20
             });
             canvas.add(text);
