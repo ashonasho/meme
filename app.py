@@ -3,6 +3,11 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 
 @app.route('/display')
+
+@app.before_request
+def log_request_info():
+    app.logger.debug('Path: %s', request.path)
+    
 def index():
     # Retrieve parameters from the request
     image_url = request.args.get('image_url', '')
@@ -13,9 +18,7 @@ def index():
     # Pass the parameters to the template
     return render_template('index.html', image_url=image_url, top_text=top_text, bottom_text=bottom_text, rect_color=rect_color)
 
-@app.before_request
-def log_request_info():
-    app.logger.debug('Path: %s', request.path)
+
 
 
 if __name__ == '__main__':
