@@ -67,15 +67,29 @@
 
         
         document.getElementById('download-btn').addEventListener('click', function() {
-            canvas.toBlob(function(blob) {
-                var link = document.createElement('a');
-                link.download = 'canvas_image.png';
-                link.href = URL.createObjectURL(blob);
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }, 'image/png');
-        });
+    var dataURL = canvas.toDataURL('image/png');
+    var blob = dataURLToBlob(dataURL);
+
+    var link = document.createElement('a');
+    link.download = 'canvas_image.png';
+    link.href = URL.createObjectURL(blob);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+});
+
+// Helper function to convert dataURL to Blob
+function dataURLToBlob(dataURL) {
+    var binaryString = window.atob(dataURL.split(',')[1]);
+    var binaryLen = binaryString.length;
+    var bytes = new Uint8Array(binaryLen);
+
+    for (var i = 0; i < binaryLen; i++) {
+       var ascii = binaryString.charCodeAt(i);
+       bytes[i] = ascii;
+    }
+    return new Blob([bytes], {type: "image/png"});
+}
     </script>
 </body>
 </html>
