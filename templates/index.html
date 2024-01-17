@@ -12,7 +12,8 @@
     <script>
         var canvas = new fabric.Canvas('canvas');
         var imageUrl = "{{ image_url }}";
-        var textValue = "{{ text }}";
+        var textTopValue = "Top Text";  // Placeholder text for the top rectangle
+        var textBottomValue = "Bottom Text";  // Placeholder text for the bottom rectangle
         var rectColor = "{{ rect_color }}";
         var rectHeight = 50; // Height of the rectangles
 
@@ -34,6 +35,14 @@
             });
             canvas.add(topRect);
 
+            var textTop = new fabric.Text(textTopValue, {
+                left: 10, // Adjust as needed
+                top: 10, // Adjust as needed
+                fontSize: 20,
+                fill: 'white' // Change as needed
+            });
+            canvas.add(textTop);
+
             // Add a bottom rectangle
             var bottomRect = new fabric.Rect({
                 left: 0,
@@ -46,13 +55,17 @@
             canvas.add(bottomRect);
 
             // Add text
-            var text = new fabric.Text(textValue, {
-                left: 150, // Adjust the position as needed
-                top: (canvas.height / 2) - (rectHeight / 2), // Center the text vertically
-                fontSize: 20
+            var textBottom = new fabric.Text(textBottomValue, {
+                left: 10, // Adjust as needed
+                top: canvas.height - rectHeight + 10, // Adjust as needed
+                fontSize: 20,
+                fill: 'white' // Change as needed
             });
-            canvas.add(text);
+            canvas.add(textBottom);
+
         });
+
+        
 
         function download() {
             var link = document.createElement('a');
