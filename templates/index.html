@@ -16,30 +16,37 @@
         var rectColor = "{{ rect_color }}";
 
         fabric.Image.fromURL(imageUrl, function(oImg) {
+            // Resize image to fit the canvas
+            oImg.scaleToWidth(canvas.width);
+            oImg.scaleToHeight(canvas.height);
             canvas.add(oImg);
-        });
 
-        var rect = new fabric.Rect({
-            left: 100,
-            top: 100,
-            fill: rectColor,
-            width: 200,
-            height: 200
-        });
-        canvas.add(rect);
+            // Add a rectangle to cover the full width of the canvas
+            var rect = new fabric.Rect({
+                left: 0,
+                top: 0,
+                fill: rectColor,
+                width: canvas.width,
+                height: 200  // Set the height as per your requirement
+            });
+            canvas.add(rect);
 
-        var text = new fabric.Text(textValue, {
-            left: 150,
-            top: 150,
-            fontSize: 20
+            // Add text
+            var text = new fabric.Text(textValue, {
+                left: 150,  // Adjust the position as needed
+                top: 150,  // Adjust the position as needed
+                fontSize: 20
+            });
+            canvas.add(text);
         });
-        canvas.add(text);
 
         function download() {
             var link = document.createElement('a');
             link.download = 'canvas.png';
             link.href = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
+            document.body.appendChild(link);  // Add the link to the document
             link.click();
+            document.body.removeChild(link);  // Remove the link after clicking
         }
     </script>
 </body>
