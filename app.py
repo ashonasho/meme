@@ -4,10 +4,7 @@ app = Flask(__name__)
 
 @app.route('/display')
 
-@app.before_request
-def log_request_info():
-    app.logger.debug('Path: %s', request.path)
-    
+
 def index():
     # Retrieve parameters from the request
     image_url = request.args.get('image_url', '')
