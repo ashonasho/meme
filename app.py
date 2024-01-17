@@ -3,8 +3,6 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 
 @app.route('/display')
-
-
 def index():
     # Retrieve parameters from the request
     image_url = request.args.get('image_url', '')
