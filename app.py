@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-@app.route('/display')
+@app.route('/')
 def index():
     # Retrieve parameters from the request
     image_url = request.args.get('image_url', '')
@@ -16,5 +16,5 @@ def index():
 
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+
+   
